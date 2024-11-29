@@ -1,21 +1,19 @@
-group 'com.b.biradar.google_ml_kit'
+group 'com.google_ml_kit'
 version '1.0'
 
 buildscript {
     repositories {
-        mavenLocal()
         google()
         mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.2'
+        classpath 'com.android.tools.build:gradle:8.2.2'
     }
 }
 
-rootProject.allprojects {
+allprojects {
     repositories {
-        mavenLocal()
         google()
         mavenCentral()
     }
@@ -24,15 +22,29 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
+    namespace 'com.google_ml_kit'
     compileSdkVersion 34
+    ndkVersion "25.1.8937393"
 
     defaultConfig {
         minSdkVersion 21
-    }
-    lintOptions {
-        disable 'InvalidPackage'
+        targetSdkVersion 34
+        consumerProguardFiles "consumer-rules.pro"
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+
+    lint {
+        disable 'InvalidPackage'
+        checkReleaseBuilds false
+    }
 }
 dependencies {
     implementation 'com.google.android.gms:play-services-mlkit-barcode-scanning:16.2.1'
